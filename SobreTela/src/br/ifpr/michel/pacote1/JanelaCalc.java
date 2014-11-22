@@ -16,20 +16,18 @@ public class JanelaCalc extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtVisor;
+	private JTextArea txaHistory;
 	String operacao = "";
 	String memoria = "";
-	private JTextArea txaHistory;
-
-	/**
-	 * Create the dialog.
-	 */
 	
+	// Rotina para colocar o numero apertado na tela
 	public void clickNumero(String umNumero){
 		String tmp = txtVisor.getText();
 		tmp = tmp+umNumero;
 		txtVisor.setText(tmp);
 	}
 	
+	//Rotina para saber qual operação o usuario selecionou
 	public void clickOp(String umaOp){
 		if (operacao != "")
 		{
@@ -42,6 +40,7 @@ public class JanelaCalc extends JDialog {
 		txaHistory.append(operacao);
 	}
 	
+	//Rotina para mostrar o resultado
 	public void clickIgual(){
 		int num1 = Integer.parseInt(memoria);
 		String tmp = txtVisor.getText();
@@ -74,6 +73,7 @@ public class JanelaCalc extends JDialog {
 		operacao = "";
 	}
 	
+	//Rotina de Limpeza, usada no botao "C" e "Voltar"
 	public void clickClear()
 	{
 		txtVisor.setText("");
@@ -269,7 +269,7 @@ public class JanelaCalc extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Voltar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						clickClear();
