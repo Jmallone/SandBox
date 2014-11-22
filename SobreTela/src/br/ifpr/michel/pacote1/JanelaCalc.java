@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import javax.swing.JCheckBox;
 
 public class JanelaCalc extends JDialog {
 
@@ -19,6 +20,7 @@ public class JanelaCalc extends JDialog {
 	private JTextArea txaHistory;
 	String operacao = "";
 	String memoria = "";
+	private JCheckBox cbxHistorico;
 	
 	// Rotina para colocar o numero apertado na tela
 	public void clickNumero(String umNumero){ //umNumero recebe o valor do botão
@@ -36,15 +38,18 @@ public class JanelaCalc extends JDialog {
 		operacao = umaOp; // operacao recebe o valor de umaOp
 		memoria = txtVisor.getText(); // memoria recebe o valor no visor
 		txtVisor.setText( "" ); // O Visor é limpado
-		txaHistory.append(memoria); // Imprimi o valor de memoria no TextArea
-		txaHistory.append(operacao); // Imprimi a operação no TextArea
+		
+		log(memoria); // Imprimi o valor de memoria no TextArea
+		log(operacao); // Imprimi a operação no TextArea
 	}
 	
 	//Rotina para mostrar o resultado
 	public void clickIgual(){
 		int num1 = Integer.parseInt(memoria); // Criando variavel local e atribuindo a num1 o valor dentro da variavel memoria
 		String tmp = txtVisor.getText(); // Variavel local, em tmp é atribuido oque esta no visor
-		txaHistory.append(tmp); // No TextArea é imprimido o valor de tmp
+		
+		log(tmp); // No TextArea é imprimido o valor de tmp
+		
 		int num2 = Integer.parseInt(tmp); // Variavel Local num2 recebe o valor convertido de tmp
 		int resultado = 0; // Variavel Local, para o resultado final
 		switch (operacao) { // Switch de Operaçoes realizada pela calculadora, a variavel resultado recebe o "Resultado" da Operaçao
@@ -65,9 +70,11 @@ public class JanelaCalc extends JDialog {
 			break;
 		}
 		tmp = Integer.toString(resultado); // tmp recebe o valor convertido para String de resultado
-		txaHistory.append(" = "); // Imprimi no TextArea " = "
-		txaHistory.append(tmp); // Imprimi no TextArea o conteudo da string tmp
-		txaHistory.append("\n");// Pula uma linha no TextArea 
+		
+		log(" = "); // Imprimi no TextArea " = "
+		log(tmp); // Imprimi no TextArea o conteudo da string tmp
+		log("\n");// Pula uma linha no TextArea 
+		
 		txtVisor.setText( tmp );// No visor é mostrado o valor de tmp
 		memoria = ""; // memoria recebe nada
 		operacao = ""; // operacao recebe nada
@@ -79,7 +86,16 @@ public class JanelaCalc extends JDialog {
 		txtVisor.setText(""); // No visor é imprimido nada
 		memoria = ""; // memoria recebe nada
 		operacao = ""; // operacao recebe nada
-		txaHistory.setText("");//Todo o conteudo do TextArea é apagada
+		log("");//Todo o conteudo do TextArea é apagada
+		
+	}
+	
+	public void log(String str ) //str recebe o valor de String
+	{
+		if(cbxHistorico.isSelected() ) // Verifica se o CheckBox Historico esta habilitado
+		{
+			txaHistory.append( str ); // Se estiver habilitado executa esta funçao
+		}
 		
 	}
 	
@@ -281,6 +297,10 @@ public class JanelaCalc extends JDialog {
 						setVisible(false);
 					}
 				});
+				
+				cbxHistorico = new JCheckBox("Historico?");
+				cbxHistorico.setSelected(true);
+				buttonPane.add(cbxHistorico);
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
