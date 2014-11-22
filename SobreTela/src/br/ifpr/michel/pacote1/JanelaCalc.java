@@ -21,35 +21,35 @@ public class JanelaCalc extends JDialog {
 	String memoria = "";
 	
 	// Rotina para colocar o numero apertado na tela
-	public void clickNumero(String umNumero){
-		String tmp = txtVisor.getText();
-		tmp = tmp+umNumero;
-		txtVisor.setText(tmp);
+	public void clickNumero(String umNumero){ //umNumero recebe o valor do botão
+		String tmp = txtVisor.getText(); // A String tmp recebe oque esta no visor
+		tmp = tmp+umNumero; // tmp recebe ele mesmo e concatena com o valor do botao
+		txtVisor.setText(tmp);// tmp é mostrado no visor
 	}
 	
 	//Rotina para saber qual operação o usuario selecionou
-	public void clickOp(String umaOp){
-		if (operacao != "")
+	public void clickOp(String umaOp){ // umaOp recebe o valor do botao de operações
+		if (operacao != "") // Compara se operacao existe algo
 		{
-			clickIgual();
+			clickIgual(); // Se existir algo diferente de nulo, executa esta rotina
 		}
-		operacao = umaOp;
-		memoria = txtVisor.getText();
-		txtVisor.setText( "" );
-		txaHistory.append(memoria);
-		txaHistory.append(operacao);
+		operacao = umaOp; // operacao recebe o valor de umaOp
+		memoria = txtVisor.getText(); // memoria recebe o valor no visor
+		txtVisor.setText( "" ); // O Visor é limpado
+		txaHistory.append(memoria); // Imprimi o valor de memoria no TextArea
+		txaHistory.append(operacao); // Imprimi a operação no TextArea
 	}
 	
 	//Rotina para mostrar o resultado
 	public void clickIgual(){
-		int num1 = Integer.parseInt(memoria);
-		String tmp = txtVisor.getText();
-		txaHistory.append(tmp);
-		int num2 = Integer.parseInt(tmp);
-		int resultado = 0;
-		switch (operacao) {
+		int num1 = Integer.parseInt(memoria); // Criando variavel local e atribuindo a num1 o valor dentro da variavel memoria
+		String tmp = txtVisor.getText(); // Variavel local, em tmp é atribuido oque esta no visor
+		txaHistory.append(tmp); // No TextArea é imprimido o valor de tmp
+		int num2 = Integer.parseInt(tmp); // Variavel Local num2 recebe o valor convertido de tmp
+		int resultado = 0; // Variavel Local, para o resultado final
+		switch (operacao) { // Switch de Operaçoes realizada pela calculadora, a variavel resultado recebe o "Resultado" da Operaçao
 			case "+":
-					resultado = num1+num2;
+					resultado = num1+num2; 
 				break;
 				
 			case "-":
@@ -64,22 +64,22 @@ public class JanelaCalc extends JDialog {
 				resultado = num1/num2;
 			break;
 		}
-		tmp = Integer.toString(resultado);
-		txaHistory.append(" = ");
-		txaHistory.append(tmp);
-		txaHistory.append("\n");
-		txtVisor.setText( tmp );
-		memoria = "";
-		operacao = "";
+		tmp = Integer.toString(resultado); // tmp recebe o valor convertido para String de resultado
+		txaHistory.append(" = "); // Imprimi no TextArea " = "
+		txaHistory.append(tmp); // Imprimi no TextArea o conteudo da string tmp
+		txaHistory.append("\n");// Pula uma linha no TextArea 
+		txtVisor.setText( tmp );// No visor é mostrado o valor de tmp
+		memoria = ""; // memoria recebe nada
+		operacao = ""; // operacao recebe nada
 	}
 	
 	//Rotina de Limpeza, usada no botao "C" e "Voltar"
 	public void clickClear()
 	{
-		txtVisor.setText("");
-		operacao = "";
-		memoria = "";
-		txaHistory.setText("");
+		txtVisor.setText(""); // No visor é imprimido nada
+		memoria = ""; // memoria recebe nada
+		operacao = ""; // operacao recebe nada
+		txaHistory.setText("");//Todo o conteudo do TextArea é apagada
 		
 	}
 	
@@ -247,6 +247,11 @@ public class JanelaCalc extends JDialog {
 		}
 		{
 			JButton button = new JButton(".");
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					clickNumero(",");
+				}
+			});
 			button.setBounds(10, 180, 50, 23);
 			contentPanel.add(button);
 		}
