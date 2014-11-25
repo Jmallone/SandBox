@@ -5,10 +5,13 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JCheckBox;
@@ -21,6 +24,7 @@ public class JanelaCalc extends JDialog {
 	String operacao = "";
 	String memoria = "";
 	private JCheckBox cbxHistorico;
+	int aa = 450;
 	
 	// Rotina para colocar o numero apertado na tela
 	public void clickNumero(String umNumero){ //umNumero recebe o valor do botão
@@ -86,7 +90,7 @@ public class JanelaCalc extends JDialog {
 		txtVisor.setText(""); // No visor é imprimido nada
 		memoria = ""; // memoria recebe nada
 		operacao = ""; // operacao recebe nada
-		log("");//Todo o conteudo do TextArea é apagada
+		txaHistory.setText("");//Todo o conteudo do TextArea é apagada
 		
 	}
 	
@@ -94,13 +98,27 @@ public class JanelaCalc extends JDialog {
 	{
 		if(cbxHistorico.isSelected() ) // Verifica se o CheckBox Historico esta habilitado
 		{
+			
 			txaHistory.append( str ); // Se estiver habilitado executa esta funçao
+			
 		}
-		
+	}
+	
+	public void clickCBox() // Rotina para redimensionar a janela
+	{
+		if(cbxHistorico.isSelected() ) // Verifica se o CheckBox Historico esta habilitado
+		{
+			setBounds(100, 100, 450, 275); // Se estiver Redimensiona a Janela para ficar maior
+		}else
+		{
+			setBounds(100, 100, 256, 275);// Se nao para a janela ficar mais pequena
+			
+		}
 	}
 	
 	public JanelaCalc() {
 		setBounds(100, 100, 450, 275);
+		//setBounds(100, 100, 450, 275);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -299,6 +317,13 @@ public class JanelaCalc extends JDialog {
 				});
 				
 				cbxHistorico = new JCheckBox("Historico?");
+				cbxHistorico.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						clickCBox();
+
+					}
+				});
 				cbxHistorico.setSelected(true);
 				buttonPane.add(cbxHistorico);
 				cancelButton.setActionCommand("Cancel");
