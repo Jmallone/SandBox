@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JCheckBox;
+import java.awt.Toolkit;
 
 public class JanelaCalc extends JDialog {
 
@@ -24,7 +25,7 @@ public class JanelaCalc extends JDialog {
 	String operacao = "";
 	String memoria = "";
 	private JCheckBox cbxHistorico;
-	int aa = 450;
+	boolean temPonto = false;
 	
 	// Rotina para colocar o numero apertado na tela
 	public void clickNumero(String umNumero){ //umNumero recebe o valor do botão
@@ -44,18 +45,19 @@ public class JanelaCalc extends JDialog {
 		txtVisor.setText( "" ); // O Visor é limpado
 		
 		log(memoria); // Imprimi o valor de memoria no TextArea
-		log(operacao); // Imprimi a operação no TextArea
+		log(" "+operacao+" "); // Imprimi a operação no TextArea
+		temPonto = false;//Variavel boleana se torna verdadeira
 	}
 	
 	//Rotina para mostrar o resultado
 	public void clickIgual(){
-		int num1 = Integer.parseInt(memoria); // Criando variavel local e atribuindo a num1 o valor dentro da variavel memoria
+		float num1 = Float.parseFloat(memoria); // Criando variavel local e atribuindo a num1 o valor dentro da variavel memoria
 		String tmp = txtVisor.getText(); // Variavel local, em tmp é atribuido oque esta no visor
 		
 		log(tmp); // No TextArea é imprimido o valor de tmp
 		
-		int num2 = Integer.parseInt(tmp); // Variavel Local num2 recebe o valor convertido de tmp
-		int resultado = 0; // Variavel Local, para o resultado final
+		float num2 = Float.parseFloat(tmp); // Variavel Local num2 recebe o valor convertido de tmp
+		float resultado = 0; // Variavel Local, para o resultado final
 		switch (operacao) { // Switch de Operaçoes realizada pela calculadora, a variavel resultado recebe o "Resultado" da Operaçao
 			case "+":
 					resultado = num1+num2; 
@@ -73,7 +75,7 @@ public class JanelaCalc extends JDialog {
 				resultado = num1/num2;
 			break;
 		}
-		tmp = Integer.toString(resultado); // tmp recebe o valor convertido para String de resultado
+		tmp = Float.toString(resultado); // tmp recebe o valor convertido para String de resultado
 		
 		log(" = "); // Imprimi no TextArea " = "
 		log(tmp); // Imprimi no TextArea o conteudo da string tmp
@@ -82,6 +84,7 @@ public class JanelaCalc extends JDialog {
 		txtVisor.setText( tmp );// No visor é mostrado o valor de tmp
 		memoria = ""; // memoria recebe nada
 		operacao = ""; // operacao recebe nada
+		temPonto = false;//Variavel boleana se torna verdadeira
 	}
 	
 	//Rotina de Limpeza, usada no botao "C" e "Voltar"
@@ -91,9 +94,11 @@ public class JanelaCalc extends JDialog {
 		memoria = ""; // memoria recebe nada
 		operacao = ""; // operacao recebe nada
 		txaHistory.setText("");//Todo o conteudo do TextArea é apagada
+		temPonto = false;//Variavel boleana se torna verdadeira
 		
 	}
 	
+	//Rotina para Verificar se esta Habilitado o Historico
 	public void log(String str ) //str recebe o valor de String
 	{
 		if(cbxHistorico.isSelected() ) // Verifica se o CheckBox Historico esta habilitado
@@ -104,21 +109,36 @@ public class JanelaCalc extends JDialog {
 		}
 	}
 	
-	public void clickCBox() // Rotina para redimensionar a janela
+	// Rotina para redimensionar a janela
+	public void clickCBox() 
 	{
 		if(cbxHistorico.isSelected() ) // Verifica se o CheckBox Historico esta habilitado
 		{
-			setBounds(100, 100, 450, 275); // Se estiver Redimensiona a Janela para ficar maior
+			setBounds(100, 100, 450, 285); // Se estiver Redimensiona a Janela para ficar maior
 		}else
 		{
-			setBounds(100, 100, 256, 275);// Se nao para a janela ficar mais pequena
+			setBounds(100, 100, 256, 285);// Se nao para a janela ficar mais pequena
+			
+		}
+	}
+	
+	//Rotina para o ponto nao aparecer mais de uma vez no visor
+	public void clickPonto()
+	{
+		if(!temPonto) // Variavel boleana negada, caso a negaçao der true, entra no if
+		{
+			String tmp = txtVisor.getText(); // Pega oque tem no visor e ponha na string tmp
+			tmp = tmp+"."; //Adiciona em tmp ela mesmo e o "." ponto
+			txtVisor.setText(tmp); // Mostra tmp no visor
+			temPonto = true; // Variavel boleana se torna verdadeira
 			
 		}
 	}
 	
 	public JanelaCalc() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\IFPR\\SandBox\\SobreTela\\img\\1417143679_Calculator.png"));
 		setTitle("Calculadora");
-		setBounds(100, 100, 450, 275);
+		setBounds(100, 100, 450, 287);
 		//setBounds(100, 100, 450, 275);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -284,7 +304,7 @@ public class JanelaCalc extends JDialog {
 			JButton button = new JButton(".");
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					clickNumero(",");
+					clickPonto();
 				}
 			});
 			button.setBounds(10, 180, 50, 23);
@@ -302,7 +322,7 @@ public class JanelaCalc extends JDialog {
 		}
 		
 		txaHistory = new JTextArea();
-		txaHistory.setBounds(254, 10, 178, 194);
+		txaHistory.setBounds(254, 42, 178, 162);
 		contentPanel.add(txaHistory);
 		{
 			JPanel buttonPane = new JPanel();

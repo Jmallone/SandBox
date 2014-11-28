@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 public class JanelaMenu extends JFrame {
 
@@ -30,6 +31,7 @@ public class JanelaMenu extends JFrame {
 		umaJanela.setVisible(true);
 	}
 	public JanelaMenu() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\IFPR\\SandBox\\SobreTela\\img\\1417143814_List_bullets.png"));
 		setTitle("Principal");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 215, 258);
