@@ -117,6 +117,7 @@ public class JanelaCalc extends JDialog {
 	}
 	
 	public JanelaCalc() {
+		setTitle("Calculadora");
 		setBounds(100, 100, 450, 275);
 		//setBounds(100, 100, 450, 275);
 		getContentPane().setLayout(new BorderLayout());
