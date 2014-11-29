@@ -117,7 +117,7 @@ public class JanelaCalc extends JDialog {
 			setBounds(100, 100, 450, 285); // Se estiver Redimensiona a Janela para ficar maior
 		}else
 		{
-			setBounds(100, 100, 267, 285);// Se nao para a janela ficar mais pequena
+			setBounds(100, 100, 260, 285);// Se nao para a janela ficar mais pequena
 			
 		}
 	}
